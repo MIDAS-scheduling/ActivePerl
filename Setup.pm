@@ -1,5 +1,3 @@
-
-
 use Win32;
 use Win32::API;
 use Win32::Shortcut;
