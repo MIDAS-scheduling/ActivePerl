@@ -1,0 +1,27 @@
+project: https://github.com/MIDAS-scheduling/ActivePerl?branch=main
+
+scripts:
+  - name: setup
+    description: Runs the perl script to set up file extension associations and start menu shortcut pointing to the perl executable
+    language: perl
+    if: eq .OS.Name "Windows"
+    value: |
+      use lib q(.);
+      use Setup qw(
+        create_internet_shortcuts
+        create_shortcuts
+        create_file_assoc
+        set_system_user_env
+        install_apache
+        install_servercheck
+      );
+      create_internet_shortcuts();
+      create_shortcuts();
+      create_file_assoc();
+      set_system_user_env();
+      install_apache();
+      install_servercheck();
+events:
+ - name: first-activate
+   if: eq .OS.Name "Windows"
+   value: perl $scripts.setup.path()
